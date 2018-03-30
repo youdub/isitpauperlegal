@@ -1,0 +1,402 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<section id="body" class="body-record">
+    <div class="container">
+        <div class="pagination active-pagination" id="pageone">
+            <div id="fadeList" class="fade-list"></div>
+            @*<h3>Search</h3>*@
+            <div class="row">
+                <div class="col-sm-9">
+                    <input class="form-control card-input" id="cardInput">
+                </div>
+                <div class="col-sm-3">
+                    <input class="btn btn-primary recordpagination btn-block" type="button" name="cardButton" onclick="getCardInfo($(cardInput).val())" value="Search" />
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 heroSlider-fixed">
+                        <div class="overlay">
+                        </div>
+                        <!-- Slider -->
+                        <div class="slider responsive">
+                            @*<div>
+                                <div id="cardContainer">
+                                    <div id="card">
+                                        <div class="front face">
+                                            <img id="cardFront" src="~/Content/Images/testCard.jpg" class="img-responsive" />
+                                        </div>
+                                        <div class="back face">
+                                            <img id="cardBack" src="~/Content/Images/cardBack.jpg" class="img-responsive" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard" />
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                            <div>
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            </div>
+                        </div>
+                        <!-- control arrows -->
+                        <div class="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        </div>
+                        <div class="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="pagination inactive-pagination" id="pagetwo">
+            <div id="fadeCover" class="fade-cover"></div>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 button-container-record-detail">
+                    <div class="record-go-back-button"><h3 href="#" class="btn-link recordpagination">go back</h3></div>
+                    <div class="record-detail-heading" style="margin-right:50px"><span class="h1" id="cardTitle"></span><br /><span class="h3" id="cardSet">Odyssey</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div id="cardContainer">
+                        <div id="card">
+                            <div class="front face">
+                                <img id="cardFront" src="~/Content/Images/testCard.jpg" class="img-responsive" />
+                            </div>
+                            <div class="back face">
+                                <img id="cardBack" src="~/Content/Images/cardBack.jpg" class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>
+                    <img id="dummyCard" src="~/Content/Images/cardBack.jpg" class="img-responsive" style="visibility:hidden;" />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row" >
+                        <h2>Is It Legal? <span id="isItLegal">Yes</span></h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3>Rarity</h3>
+                            <span id="cardRarity">Common</span>
+                            <h3>Tix</h3>
+                            <span id="cardTix">Not Online</span>
+                            <h3>Price</h3>
+                            <span id="cardPrice">.17</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>CMC</h3>
+                            <span id="cardCMC">1</span>
+                            <h3>Reserved?</h3>
+                            <span id="cardReserved">Yes</span>
+                            <h3>Reprint?</h3>
+                            <span id="cardReprint">No</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="oracleContainer" class="col-sm-12">
+                            <h3>Oracle Text</h3>
+                            <div id="oracleText"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="flavorContainer" class="col-sm-12">
+                            <h3>Flavor Text</h3>
+                            <div id="flavorText"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 href="#" class="btn-link recordpagination">go back</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js"></script>
+<script src="~/Scripts/Custom/cardCarousel.js"></script>
+<link rel="stylesheet" href="~/Content/cardCarousel.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.css">
+
+
+@* CDNs *@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">
+
+@* LOCAL ASSETS *@
+<link rel="stylesheet" type="text/css" href="~/Content/flip.css">
+
+<script type="text/javascript">
+
+    //VARS
+    var pageone = $("#pageone");
+    var pagetwo = $("#pagetwo");
+    var carouselCards = $(".carouselCard");
+    var autocompleteList = [];
+
+    $(document).ready(function () {
+        getRandomForCarousel();
+    });
+
+
+    //ONCLICK PAGINATION
+    $(".recordpagination").click(function (e) {
+        e.preventDefault();
+        var frompage = $(".active-pagination"),
+            topage = $(".inactive-pagination");
+        showPage(topage, frompage);
+    });
+
+    //SHOW NEW PAGE
+    function showPage(topage, frompage) {
+        if (topage[0].id == "pagetwo") {
+            $("#fadeList").fadeIn(function () {
+                var pageWidth = frompage.width();
+                topage.css("left", pageWidth);
+                topage.addClass("active-pagination");
+                topage.removeClass("inactive-pagination");
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                topage.add(frompage).animate({
+                    "left": "-=" + pageWidth + "px"
+                }, 500).promise().done(function () {
+                    frompage.removeClass('active-pagination');
+                    frompage.addClass('inactive-pagination');
+                    $("#fadeCover").fadeOut();
+                });
+            });
+        }
+        else {
+            $("#fadeCover").fadeIn(function () {
+                var pageWidth = frompage.width();
+                topage.css("left", -pageWidth);
+                topage.addClass("active-pagination");
+                topage.removeClass("inactive-pagination");
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                topage.add(frompage).animate({
+                    "left": "+=" + pageWidth + "px"
+                }, 500).promise().done(function () {
+                    frompage.removeClass('active-pagination');
+                    frompage.addClass('inactive-pagination');
+                    $("#fadeList").fadeOut();
+                });
+            });
+        }
+    }
+
+    //ONKEYUP FUNCTION FOR AUTOCOMPLETE INPUT
+    $("#cardInput").keyup(function () {
+        if ($("#cardInput").val().length > 2) {
+            autocompleteReturn($("#cardInput").val())
+        }
+        else {
+            autocompleteList = [];
+        }
+    });
+
+    //AJAX CALL FOR AUTOCOMPLETE
+    function autocompleteReturn(search) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.scryfall.com/cards/autocomplete?q=" + search,
+            success: function (data) {
+                autocompleteList = data.data;
+                $("#cardInput").autocomplete({
+                    source: autocompleteList
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        });
+    }
+
+    //AJAX CALL FOR CARD RETURN
+    function getCardInfo(card) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.scryfall.com/cards/named/?exact=" + card,
+            success: function (data) {
+                if (data.reprint == true) {
+                    getPaper(data);
+                }
+                else {
+                    fillPage(data)
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        });
+    }
+
+
+    //AJAX CALL FOR GETTING PAPER CARD OBJECT
+    function getPaper(card) {
+        if (card.name != "Swamp" &&
+            card.name != "Plains" &&
+            card.name != "Island" &&
+            card.name != "Forest" &&
+            card.name != "Mountain") {
+            $.ajax({
+                type: "GET",
+                url: card.prints_search_uri,
+                success: function (data) {
+                    var i = data.total_cards - 1;
+                   
+                    var foundCardData = data.data[i];
+                    fillPage(foundCardData);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown)
+                }
+            });
+        }
+        else {
+            fillPage(card);
+        }
+
+    }
+
+    //CALLS FOR RANDOM CARDS FOR CAROUSEL
+    function getRandom(i) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.scryfall.com/cards/random",
+            success: function (data) {
+                if (data.rarity == "common"
+                    && data.legalities.pauper != "not_legal"
+                    && data.type_line.indexOf("Basic Land") == -1) {
+                    if (data.card_faces != null) {
+                        $(carouselCards[i]).attr("src", data.card_faces[0].image_uris.normal);
+                    }
+                    else {
+                        $(carouselCards[i]).attr("src", data.image_uris.normal);
+                    }
+                }
+                else {
+                    getRandom(i);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    //FILL RANDOM CARDS FOR CAROUSEL
+    function getRandomForCarousel() {
+        for (i = 0; i < carouselCards.length; i++) {
+            getRandom(i);
+        }
+    }
+
+
+    //FUNCTION FOR FILLING SELECTED CARD WITH DATA IN CARD FOCUS PANEL
+    function fillPage(data) {
+        console.log("+++++++");
+        console.log(data);
+        console.log("+++++++");
+        if (data.card_faces != null) {
+            $("#flipButton").css("display", "inline");
+            $("#cardFront").attr("src", data.card_faces[0].image_uris.normal);
+            $("#cardBack").attr("src", data.card_faces[1].image_uris.normal);
+            if (data.card_faces[0].oracle_text != null) {
+                $("#oracleContainer").css("display", "inline");
+                $("#oracleText").text(data.card_faces[0].oracle_text);
+            }
+            else {
+                $("#oracleContainer").css("display", "none");
+            }
+            if (data.card_faces[0].flavor_text != null) {
+                $("#flavorContainer").css("display", "inline");
+                $("#flavorText").text(data.card_faces[0].flavor_text);
+            }
+            else {
+                $("#flavorContainer").css("display", "none");
+            }
+        }
+        else {
+            $("#cardFront").attr("src", data.image_uris.normal);
+            $("#cardBack").attr("src", "../Content/Images/cardBack.jpg");
+            if (data.oracle_text != null) {
+                $("#oracleContainer").css("display", "inline");
+                $("#oracleText").text(data.oracle_text);
+            }
+            else {
+                $("#oracleContainer").css("display", "none");
+            }
+            if (data.flavor_text != null) {
+                $("#flavorContainer").css("display", "inline");
+                $("#flavorText").text(data.flavor_text);
+            }
+            else {
+                $("#flavorContainer").css("display", "none");
+            }
+        }
+        if (data.legalities.pauper == "legal") {
+            $("#isItLegal").text("Yeah");
+        }
+        else if (data.rarity == "common") {
+            $("#isItLegal").text("Yes Sir!");
+        }
+        else {
+            $("#isItLegal").text("Nah Man");
+        }
+        $("#cardTitle").text(data.name);
+        $("#cardSet").text(data.set_name);
+        $("#cardRarity").text(data.rarity);
+        $("#cardPrice").text("$" + data.usd);
+        $("#cardCMC").text(data.cmc);
+        if (data.reserved == true) {
+            $("#cardReserved").text("Yes");
+        }
+        else {
+            $("#cardReserved").text("No");
+        }
+        if (data.reprint == true) {
+            $("#cardReprint").text("Yes");
+        }
+        else {
+            $("#cardReprint").text("No");
+        }
+        if (data.tix == null) {
+            $("#cardTix").text("Not Online");
+        }
+        else {
+            $("#cardTix").text(data.tix);
+        }
+
+    }
+</script>

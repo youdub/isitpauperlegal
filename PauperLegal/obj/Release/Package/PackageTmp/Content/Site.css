@@ -1,0 +1,130 @@
+﻿/*INDEX*/
+.body-index {
+  margin-top: 50px;
+}
+
+body {
+  /*font-family: 'Roboto', sans-serif;*/
+  /*color: #545E6C;*/
+  background: #fff;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fade-list {
+    position:absolute; 
+    height:100%; 
+    width:100%; 
+    background-color:#fff; 
+    z-index:501; 
+    display:none;
+}
+
+.index-header{
+   padding-bottom:0px !important;
+   background-color:#fff;
+   max-width: 960px; 
+   margin:auto; 
+   position:relative;
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.colored {
+  border-color: #eb6864;
+  margin: 3px auto;
+  max-width: 50px;
+}
+
+.allwhite {
+  border-color: #2b2b2b;
+  margin: 3px auto;
+  max-width: 50px;
+}
+
+/*RECORD DETAIL*/
+.record-heading{
+    background-image: url("/Assets/Images/Records/header.jpg");
+    background-size:100%;    
+    height:100px;
+    padding:16px;
+    width:100%;
+    margin-bottom:32px;
+    border-radius:4px;
+}
+
+.record-h1{
+    color:#2b2b2b;
+}
+
+.record-input{
+    margin-bottom:32px; 
+    width:100%;
+}
+
+.button-container{
+    width:100%;
+}
+
+.record-buttons{
+    width:50%;
+}
+
+.body-record{
+    overflow:hidden;
+    width:100%;
+    background-color:#fff;
+}
+
+#body{
+    padding-top:66px;
+}
+
+.row{
+    margin-bottom:32px;
+}
+
+.record-hide-element{
+    display:none;
+}
+
+.fade-cover{
+    position:absolute;
+    height:100%; 
+    width:100%; 
+    background-color:#fff; 
+    z-index:501
+}
+.button-container-record-detail{
+    width:100%;
+    display:inline-flex;
+}
+.record-go-back-button{
+    width:10%;
+}
+
+.record-detail-heading{
+    width:90%;
+    text-align:right;
+}
+
+.album-image-record-detail{
+    min-width:100%;
+}
+
+/*SLIDER*/
+.pagination {
+   display: none;
+   position: relative;
+   width: 100%;
+   height:auto;
+   bottom: 0px;
+}
+.active-pagination {
+   display: inline-block;
+}
+
+.inactive-pagination{
+}
