@@ -1,18 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Is It Pauper Legal?";
 }
 
 <section id="body" class="body-record">
     <div class="container">
         <div class="pagination active-pagination" id="pageone">
             <div id="fadeList" class="fade-list"></div>
-            @*<h3>Search</h3>*@
             <div class="row">
                 <div class="col-sm-9">
                     <input class="form-control card-input" id="cardInput">
                 </div>
                 <div class="col-sm-3">
-                    <input class="btn btn-primary recordpagination btn-block" type="button" name="cardButton" onclick="getCardInfo($(cardInput).val())" value="Search" />
+                    <input class="btn btn-primary recordpaginationsearch btn-block" type="button" name="cardButton" onclick="getCardInfo($(cardInput).val())" value="Search" />
                 </div>
             </div>
             <div class="container">
@@ -22,41 +21,29 @@
                         </div>
                         <!-- Slider -->
                         <div class="slider responsive">
-                            @*<div>
-                                <div id="cardContainer">
-                                    <div id="card">
-                                        <div class="front face">
-                                            <img id="cardFront" src="~/Content/Images/testCard.jpg" class="img-responsive" />
-                                        </div>
-                                        <div class="back face">
-                                            <img id="cardBack" src="~/Content/Images/cardBack.jpg" class="img-responsive" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>*@
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard" />
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
-                            <div>
-                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard"/>
+                            <div class="carouselCardContainer">
+                                <img src="~/Content/Images/cardBack.jpg" alt="" class="carouselCard recordpagination" onclick="getRandomInfo(this.alt)"/>
                             </div>
                         </div>
                         <!-- control arrows -->
@@ -85,7 +72,7 @@
                     <div id="cardContainer">
                         <div id="card">
                             <div class="front face">
-                                <img id="cardFront" src="~/Content/Images/testCard.jpg" class="img-responsive" />
+                                <img id="cardFront" src="~/Content/Images/cardBack.jpg" class="img-responsive cardFront" />
                             </div>
                             <div class="back face">
                                 <img id="cardBack" src="~/Content/Images/cardBack.jpg" class="img-responsive" />
@@ -145,18 +132,16 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js"></script>
-<script src="~/Scripts/Custom/cardCarousel.js"></script>
-<link rel="stylesheet" href="~/Content/cardCarousel.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.css">
-
-
 @* CDNs *@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.css">
 
 @* LOCAL ASSETS *@
 <link rel="stylesheet" type="text/css" href="~/Content/flip.css">
+<script src="~/Scripts/Custom/cardCarousel.js"></script>
+<link rel="stylesheet" href="~/Content/cardCarousel.css">
 
 <script type="text/javascript">
 
@@ -172,13 +157,27 @@
 
 
     //ONCLICK PAGINATION
-    $(".recordpagination").click(function (e) {
-        e.preventDefault();
-        var frompage = $(".active-pagination"),
-            topage = $(".inactive-pagination");
-        showPage(topage, frompage);
-    });
 
+        $(".recordpaginationsearch").click(function (e) {
+            e.preventDefault();
+            if ($("#cardInput").val() != "") {
+                var frompage = $(".active-pagination"),
+                    topage = $(".inactive-pagination");
+                showPage(topage, frompage);
+            }
+            else {
+                $("#cardInput").focus();
+            }
+        });
+
+    //ONCLICK PAGINATION RANDOM
+        $(".recordpagination").click(function (e) {
+            e.preventDefault();
+                var frompage = $(".active-pagination"),
+                    topage = $(".inactive-pagination");
+                showPage(topage, frompage);
+        });
+    
     //SHOW NEW PAGE
     function showPage(topage, frompage) {
         if (topage[0].id == "pagetwo") {
@@ -286,7 +285,6 @@
         else {
             fillPage(card);
         }
-
     }
 
     //CALLS FOR RANDOM CARDS FOR CAROUSEL
@@ -297,7 +295,9 @@
             success: function (data) {
                 if (data.rarity == "common"
                     && data.legalities.pauper != "not_legal"
+                    && data.legalities.pauper != "banned"
                     && data.type_line.indexOf("Basic Land") == -1) {
+                    $(carouselCards[i]).attr("alt", data.uri);
                     if (data.card_faces != null) {
                         $(carouselCards[i]).attr("src", data.card_faces[0].image_uris.normal);
                     }
@@ -322,12 +322,26 @@
         }
     }
 
+    //AJAX FOR GETTING CARD DETAIL OF RANDOM CARD SELECTED
+    function getRandomInfo(uri) {
+        $.ajax({
+            type: "GET",
+            url: uri,
+            success: function (data) {
+                getPaper(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
 
     //FUNCTION FOR FILLING SELECTED CARD WITH DATA IN CARD FOCUS PANEL
     function fillPage(data) {
-        console.log("+++++++");
+        console.log("!!!!!!!!!!!");
         console.log(data);
-        console.log("+++++++");
+        console.log("!!!!!!!!!!!");
         if (data.card_faces != null) {
             $("#flipButton").css("display", "inline");
             $("#cardFront").attr("src", data.card_faces[0].image_uris.normal);

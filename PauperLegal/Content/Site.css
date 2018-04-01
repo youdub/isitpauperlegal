@@ -128,3 +128,13 @@ body {
 
 .inactive-pagination{
 }
+
+.carouselCard{
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.cardFront{
+    border-radius:25px;
+    overflow:hidden;
+}
