@@ -92,7 +92,7 @@
                             <h3>Tix</h3>
                             <span id="cardTix">Not Online</span>
                             <h3>Price</h3>
-                            <span id="cardPrice">.17</span>
+                            <span id="cardPrice"></span>
                         </div>
                         <div class="col-sm-6">
                             <h3>CMC</h3>
@@ -101,6 +101,12 @@
                             <span id="cardReserved">Yes</span>
                             <h3>Reprint?</h3>
                             <span id="cardReprint">No</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Type Line</h3>
+                            <div id="typeLine"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -113,6 +119,16 @@
                         <div id="flavorContainer" class="col-sm-12">
                             <h3>Flavor Text</h3>
                             <div id="flavorText"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="versionsContainer" class="col-sm-12">
+                            <div class="form-group" style="width:100%">
+                                <select class="custom-select">
+                                    <option selected="">Other Versions...</option>
+                                    <option value="1">ColdSnap</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,13 +146,18 @@
 
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
 
 @* CDNs *@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.css">
+<script src="https://bootswatch.com/_vendor/popper.js/dist/umd/popper.min.js"></script>
+<script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+
+
 
 @* LOCAL ASSETS *@
 <link rel="stylesheet" type="text/css" href="~/Content/flip.css">
@@ -151,8 +172,10 @@
     var carouselCards = $(".carouselCard");
     var autocompleteList = [];
 
+
     $(document).ready(function () {
         getRandomForCarousel();
+
     });
 
 
@@ -336,16 +359,51 @@
         });
     }
 
+    //AJAX FOR GETTING ALL CARD VARIANTS TO POPULATE DROPDOWN
+    function getAllVersions(uri) {
+        $.ajax({
+            type: "GET",
+            url: uri,
+            success: function (data) {
+                console.log("!!!!Versions!!!!");
+                console.log(data);
+                console.log("!!!!Versions!!!!");
+                if (data.total_cards == 1) {
+                    $("#versionsContainer").css("display", "none");
+                }
+                else {
+                    //TODO: FIX VERSIONS CHANGE FROM NONE TO INLINE
+                    $("#versionsContainer").css("display", "none");
+                    var totalCards = data.total_cards - 1;
+                    console.log("Total Cards Variants:" + (totalCards + 1));
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
+    }
+
 
     //FUNCTION FOR FILLING SELECTED CARD WITH DATA IN CARD FOCUS PANEL
     function fillPage(data) {
-        console.log("!!!!!!!!!!!");
+        console.log("!!!!Selected Card!!!!");
         console.log(data);
-        console.log("!!!!!!!!!!!");
+        console.log("!!!!Selected Card!!!!");
+        //DISABLED FOR NOW SEE LINE 375
+        getAllVersions(data.prints_search_uri);
+        //CHECK FOR DUAL FACED CARDS
         if (data.card_faces != null) {
-            $("#flipButton").css("display", "inline");
-            $("#cardFront").attr("src", data.card_faces[0].image_uris.normal);
-            $("#cardBack").attr("src", data.card_faces[1].image_uris.normal);
+            //CHECK FOR SINGLE FACED MULTICARDS E.G. WEAR // TEAR
+            if (data.card_faces[0].image_uris == null) {
+                $("#cardFront").attr("src", data.image_uris.normal);
+                $("#cardBack").attr("src", "../Content/Images/cardBack.jpg");
+            }
+            else {
+                $("#cardFront").attr("src", data.card_faces[0].image_uris.normal);
+                $("#cardBack").attr("src", data.card_faces[1].image_uris.normal);
+            }
+            $("#typeLine").text(data.card_faces[0].type_line + " // " + data.card_faces[1].type_line)
             if (data.card_faces[0].oracle_text != null) {
                 $("#oracleContainer").css("display", "inline");
                 $("#oracleText").text(data.card_faces[0].oracle_text);
@@ -361,9 +419,11 @@
                 $("#flavorContainer").css("display", "none");
             }
         }
+        //IF NOT DUAL FACED CARD
         else {
             $("#cardFront").attr("src", data.image_uris.normal);
             $("#cardBack").attr("src", "../Content/Images/cardBack.jpg");
+            $("#typeLine").text(data.type_line)
             if (data.oracle_text != null) {
                 $("#oracleContainer").css("display", "inline");
                 $("#oracleText").text(data.oracle_text);
@@ -411,6 +471,5 @@
         else {
             $("#cardTix").text(data.tix);
         }
-
     }
 </script>
