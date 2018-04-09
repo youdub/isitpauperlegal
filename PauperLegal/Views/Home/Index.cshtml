@@ -124,9 +124,7 @@
                     <div class="row">
                         <div id="versionsContainer" class="col-sm-12">
                             <div class="form-group" style="width:100%">
-                                <select class="custom-select">
-                                    <option selected="">Other Versions...</option>
-                                    <option value="1">ColdSnap</option>
+                                <select id="cardVariantSelect" class="custom-select">
                                 </select>
                             </div>
                         </div>
@@ -359,38 +357,11 @@
         });
     }
 
-    //AJAX FOR GETTING ALL CARD VARIANTS TO POPULATE DROPDOWN
-    function getAllVersions(uri) {
-        $.ajax({
-            type: "GET",
-            url: uri,
-            success: function (data) {
-                console.log("!!!!Versions!!!!");
-                console.log(data);
-                console.log("!!!!Versions!!!!");
-                if (data.total_cards == 1) {
-                    $("#versionsContainer").css("display", "none");
-                }
-                else {
-                    //TODO: FIX VERSIONS CHANGE FROM NONE TO INLINE
-                    $("#versionsContainer").css("display", "none");
-                    var totalCards = data.total_cards - 1;
-                    console.log("Total Cards Variants:" + (totalCards + 1));
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-            }
-        });
-    }
-
-
     //FUNCTION FOR FILLING SELECTED CARD WITH DATA IN CARD FOCUS PANEL
     function fillPage(data) {
         console.log("!!!!Selected Card!!!!");
         console.log(data);
         console.log("!!!!Selected Card!!!!");
-        //DISABLED FOR NOW SEE LINE 375
         getAllVersions(data.prints_search_uri);
         //CHECK FOR DUAL FACED CARDS
         if (data.card_faces != null) {
@@ -439,6 +410,12 @@
                 $("#flavorContainer").css("display", "none");
             }
         }
+        //FILL PROPERTIES WE KNOW WILL HAVE VALUES
+        $("#cardTitle").text(data.name);
+        $("#cardSet").text(data.set_name);
+        $("#cardRarity").text(data.rarity);
+        $("#cardCMC").text(data.cmc);
+        //TEST PROPERTIES THAT MAY HAVE VALUES
         if (data.legalities.pauper == "legal") {
             $("#isItLegal").text("Yeah");
         }
@@ -448,11 +425,11 @@
         else {
             $("#isItLegal").text("Nah Man");
         }
-        $("#cardTitle").text(data.name);
-        $("#cardSet").text(data.set_name);
-        $("#cardRarity").text(data.rarity);
-        $("#cardPrice").text("$" + data.usd);
-        $("#cardCMC").text(data.cmc);
+        if (data.usd != null){
+           $("#cardPrice").text("$" + data.usd);
+        } else {
+            $("#cardPrice").text("Online Set");
+        }
         if (data.reserved == true) {
             $("#cardReserved").text("Yes");
         }
@@ -472,4 +449,60 @@
             $("#cardTix").text(data.tix);
         }
     }
+
+    //AJAX FOR GETTING ALL CARD VARIANTS TO POPULATE DROPDOWN
+    function getAllVersions(uri) {
+        $.ajax({
+            type: "GET",
+            url: uri,
+            success: function (data) {
+                console.log("!!!!Versions!!!!");
+                console.log(data);
+                console.log("!!!!Versions!!!!");
+                if (data.total_cards == 1) {
+                    $("#versionsContainer").css("display", "none");
+                }
+                else {
+                    $("#versionsContainer").css("display", "inline");
+                    var totalCards = data.total_cards - 1;
+                    console.log("Total Cards Variants:" + (totalCards + 1));
+                    fillVariantDropdown(data, totalCards);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+            }
+        });
+    }
+
+    //FILL DROPDOWN WITH CARD VARIANTS
+    function fillVariantDropdown(data, totalCards) {
+        $('#cardVariantSelect').empty();
+        $('#cardVariantSelect').append('<option selected="">Other Versions...</option>');
+        for (i = 0; i < data.data.length; i++) {
+            $('#cardVariantSelect').append('<option value="' + data.data[i].uri + '">' + data.data[i].set_name + '</option>');            
+        }
+    }
+
+    //SELECT CARD FROM VERSIONS DROPDOWN
+    $('#cardVariantSelect').change(function () {
+        console.log($('#cardVariantSelect').find(":selected").val());
+        getSelectedInfo($('#cardVariantSelect').find(":selected").val());
+    });
+
+    //AJAX FOR GETTING CARD DETAIL OF DROPDOWN CARD SELECTED
+    function getSelectedInfo(uri) {
+        $.ajax({
+            type: "GET",
+            url: uri,
+            success: function (data) {
+                fillPage(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+
 </script>
