@@ -138,3 +138,13 @@ body {
     border-radius:25px;
     overflow:hidden;
 }
+
+/*FONTS*/
+@font-face {
+    font-family:'magicFont';
+    src: url('Fonts/magic.ttf');  
+}
+
+.magic-font{
+    font-family:magicFont;
+}
